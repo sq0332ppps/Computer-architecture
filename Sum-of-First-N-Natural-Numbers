@@ -1,0 +1,58 @@
+.data
+arg: .word 10 # N Natrual Number 
+str1: .string "Sum of first "
+str2: .string " natural numbers =  "
+
+.text
+main:                                   # @main
+        addi    sp, sp, -32
+        sw      ra, 28(sp)
+        sw      s0, 24(sp)
+        addi    s0, sp, 32
+        mv      a0, zero
+        sw      a0, -12(s0)
+        sw      a0, -16(s0)						#sum
+			lw			 a1  arg
+        sw      a1, -20(s0)						#N
+        sw      a0, -24(s0)						#i
+        j       .LBB0_1
+.LBB0_1:                                # =>This Inner Loop Header: Depth=1
+        lw      a0, -24(s0)
+        lw      a1, -20(s0)
+        blt     a1, a0, print
+        j       .LBB0_2
+.LBB0_2:                                #   in Loop: Header=BB0_1 Depth=1
+        lw      a0, -16(s0)
+        lw      a1, -24(s0)
+        add     a0, a0, a1
+        sw      a0, -16(s0)
+        j       .LBB0_3
+.LBB0_3:                                #   in Loop: Header=BB0_1 Depth=1
+        lw      a0, -24(s0)
+        addi    a0, a0, 1
+        sw      a0, -24(s0)
+        j       .LBB0_1
+.LBB0_4:
+        mv      a0, zero
+        lw      s0, 24(sp)
+        lw      ra, 28(sp)
+        addi    sp, sp, 32
+        ret
+
+print: 
+			la      a1,str1 # Load the address of the string, placed in the static data segment
+    		li      a0,4   # Argument '4' for ecall instructs ecall to print to console
+    		ecall
+			
+			lw      a1,arg
+			li      a0,1	
+			ecall
+
+			la      a1,str2 # Load the address of the string, placed in the static data segment
+    		li      a0,4   # Argument '4' for ecall instructs ecall to print to console
+    		ecall
+
+			lw     a1,-16(s0)
+			li			a0,1
+			ecall
+			j .LBB0_4
