@@ -11,26 +11,26 @@ main:                                   # @main
         addi    s0, sp, 32
         mv      a0, zero
         sw      a0, -12(s0)
-        sw      a0, -16(s0)						#sum
-			lw			 a1  arg
-        sw      a1, -20(s0)						#N
-        sw      a0, -24(s0)						#i
+        sw      a0, -16(s0)		#sum
+	lw	a1,  arg
+        sw      a1, -20(s0)		#N
+        sw      a0, -24(s0)		#i
         j       .LBB0_1
-.LBB0_1:                                # =>This Inner Loop Header: Depth=1
+.LBB0_1:                                # =>This Inner Loop Header: Depth=1	
         lw      a0, -24(s0)
-        lw      a1, -20(s0)
-        blt     a1, a0, print
+        lw      a1, -20(s0)		
+        blt     a1, a0, print		# if i<N	
         j       .LBB0_2
 .LBB0_2:                                #   in Loop: Header=BB0_1 Depth=1
         lw      a0, -16(s0)
-        lw      a1, -24(s0)
-        add     a0, a0, a1
+        lw      a1, -24(s0)		
+        add     a0, a0, a1		#sum = sum + i
         sw      a0, -16(s0)
         j       .LBB0_3
 .LBB0_3:                                #   in Loop: Header=BB0_1 Depth=1
         lw      a0, -24(s0)
-        addi    a0, a0, 1
-        sw      a0, -24(s0)
+        addi    a0, a0, 1		#i++
+        sw      a0, -24(s0)		
         j       .LBB0_1
 .LBB0_4:
         mv      a0, zero
