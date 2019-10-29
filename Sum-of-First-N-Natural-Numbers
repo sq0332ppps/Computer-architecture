@@ -3,6 +3,7 @@ arg: .word 10 # N Natrual Number
 str1: .string "Sum of first "
 str2: .string " natural numbers =  "
 
+
 .text
 main:                                   # @main
         addi    sp, sp, -32
